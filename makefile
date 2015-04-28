@@ -1,3 +1,5 @@
+bite::
+
 main: grille.o main.o personnage.o affichage.o argv.o chemin.o
 	gcc -o bin/app compile/grille.o compile/personnage.o compile/main.o compile/argv.o compile/affichage.o compile/chemin.o -lncurses
 
