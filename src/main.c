@@ -17,10 +17,10 @@
 
 int main (int argc, char *argv[])
 {
-	if (check_agrv(argc, argv) == 0) // test pour les agruments
+/*	if (check_agrv(argc, argv) == 0) // test pour les agruments
 	{
 
-		Grille grid;
+		grille grid;
 		Perso  joueur;
 		Pos    pos;
 		Objet  list_obj[OBJ];
@@ -113,6 +113,6 @@ int main (int argc, char *argv[])
 	else
 	{
 		exit(1);
-	}
+	}*/
 	return 0;
 }

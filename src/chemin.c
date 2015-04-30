@@ -12,7 +12,7 @@
 #include "grille.h"
 #include "personnage.h"
 #include "affichage.h"
-
+/*
 #define N 20
 //Si le chemin est invalide
 void path_fail (Grille grid)
@@ -128,4 +128,4 @@ void test_chemin (Grille grid, Perso perso, Objet obj[], int taille_obj)
 		get_chemin (grid, perso, obj, taille_obj, chemin[i]);
 	}
 	path_pass(grid);
-}
+}*/

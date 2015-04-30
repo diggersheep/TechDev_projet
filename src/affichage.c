@@ -15,6 +15,7 @@
 
 #define OBJ_MAX 10
 
+/*
 //Affiche les différentes cases non blocantes
 void gestion_case (Grille grid, int i, int j)
 {
@@ -436,4 +437,5 @@ void perdu (Grille grid, Perso perso)
 	destruction_grille(grid);
 	exit(0);
 }
+*/
 

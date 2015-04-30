@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "grille.h"
 #include "personnage.h"
 
 #define OBJ_MAX 10
@@ -69,6 +68,7 @@ Perso new_perso (char nom[], Pos pos, int pv, int atk, int def)
 
 //Permet de récupérer une paire de coordonnée grace a un fichier *.map
 Pos get_pos (char *path)
+{
 	FILE*  f;
 	Pos pos;
 	int i;
