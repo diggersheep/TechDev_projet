@@ -1,3 +1,10 @@
+/**
+* @file SDL_affichage.c
+* @brief affichage avec SDL
+* @author Alexandre COMBEAU
+* @date 01-05-2015
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL/SDL.h>
@@ -8,28 +15,26 @@
 #define MAX_SPRITE 2000
 
 
-typedef struct StrObjScreen
-{
-	int id;
-	SDL_Surface* img;
-} ObjScreen;
+//=========================================
+//    VARIABLES GLOBALES POUR SDL
+//=========================================
+SDL_Surface* screen = NULL;               //context de la fenetre
+SDL_Rect screen_position;                 //position dans la fenetre
 
-SDL_Surface* screen = NULL;
-SDL_Rect screen_position;
+unsigned int screen_size_l;               //taille de la fenetre
+unsigned int screen_size_h;               //taille de la fenetre
+unsigned int sceen_case_size = 32;        //taille d'une case en pixel
 
-unsigned int screen_size_l;
-unsigned int screen_size_h;
-unsigned int sceen_case_size = 32;
-
-ObjScreen screen_image[MAX_SPRITE];
-unsigned int screen_image_taille = 0;
-unsigned short chargemement_pourcent = 0;
+ObjScreen screen_image[MAX_SPRITE];       //banque d'image #hold-up X)
+unsigned int screen_image_taille = 0;     //taille de la banque d'image
+unsigned short chargemement_pourcent = 0; //indicateur barre de chargement
+//=========================================
 
 void initSDL (int l, int h)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE); //#DESTRUCTION !!!!!!!!!
 	}
 
 	atexit(SDL_Quit);
@@ -181,11 +186,17 @@ void unsetImage (void)
 
 void SDL_AfficherGrille(grille g)
 {
+	if (g == NULL)
+	{
+		printf("ErreurSDL_AfficherGrille : La grille est vide (NULL) - (%p)\n", &g);
+		exit(EXIT_FAILURE);
+	}
+
 	unsigned int i;
 	unsigned int j;
 	unsigned int k;
 
-	SDL_Surface* tmp;
+	SDL_Surface* tmp = NULL;
 
 	for (i = 0 ; i < g->n ; i++)
 	{
@@ -195,9 +206,23 @@ void SDL_AfficherGrille(grille g)
 			{
 				if (g->grid[i][j] == screen_image[k].id)
 				{
+					if (screen_image[k].img == NULL)
+					{
+						printf("ErreurSDL_AfficherGrille : Une image n'est pas chargée (NULL) - (%p)\n", &g);
+						unsetImage();
+						destruction_grille(g);
+						exit(EXIT_FAILURE);
+					}
 					tmp = screen_image[k].img;
-					k = 999999;
+					k = 999999;//pour quitter la boucle
 				}
+			}
+			if (tmp == NULL)
+			{
+				printf("ErreurSDL_AfficherGrille : Une image n'est pas chargée (NULL) - (%p)\n", &g);
+				unsetImage();
+				destruction_grille(g);
+				exit(EXIT_FAILURE);
 			}
 			afficher_case(tmp);
 		}
@@ -212,30 +237,42 @@ int main(int argc, char *argv[])
 {
 	unsigned int i;
 
+	//init de la position
 	screen_position.x = 0;
 	screen_position.y = 0;
 	
+	//init grille
 	grille g = NULL;
-	//sprite
-	SDL_Surface* fond = NULL;
-	SDL_Surface* obj = NULL;
-	SDL_Surface* sol = NULL;
-	SDL_Surface* etoile = NULL;
-
 	g = mopen(argv[1]); 
 
+	//inialisation du contexte de la fenetre SDL
 	initSDL(g->n * sceen_case_size, g->m * sceen_case_size);
 
-	setAllImage();	
-	printf("... screen_image_taille:%d\n", screen_image_taille);
-	attendre_touche();
+	//inialisation des images avec barre de chargement
+	setAllImage();
+	//indicateur de taille de la banque
+	//printf("... screen_image_taille:%d\n", screen_image_taille);
 	
+	
+	attendre_touche(); //Pause
+	
+	//Affichage de la grille ...
 	SDL_AfficherGrille(g);
-	SDL_Flip(screen);
+	SDL_Flip(screen); // <=> refresh();
+	
+	//Pause
 	attendre_touche();
 
+
+	//Désallocation mémoire !! Très important
 	unsetImage();
 	destruction_grille(g);
 
 	return 0;
 }
+
+/*
+
+
+
+*/

@@ -1,3 +1,10 @@
+/**
+* @file SDL_affichage.h
+* @brief proto affichage avec SDL
+* @author Alexandre COMBEAU
+* @date 01-05-2015
+*/
+
 #ifndef __SDL_AFFICHAGE_H_
 #define __SDL_AFFICHAGE_H_
 #include <stdlib.h>
@@ -9,23 +16,13 @@
 
 #define MAX_SPRITE 2000
 
-
+/**Strucure associative : id / image.
+	Utile pour gérer efficacement les sprites*/
 typedef struct StrObjScreen
 {
 	int id;
 	SDL_Surface* img;
 } ObjScreen;
-
-SDL_Surface* screen = NULL;
-SDL_Rect screen_position;
-
-unsigned int screen_size_l;
-unsigned int screen_size_h;
-unsigned int sceen_case_size = 32;
-
-ObjScreen screen_image[MAX_SPRITE];
-unsigned int screen_image_taille = 0;
-unsigned short chargemement_pourcent = 0;
 
 /**Initialise SDL avec une lageur et une hauteur donnée*/
 void initSDL (int l, int h);
