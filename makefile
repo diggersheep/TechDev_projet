@@ -22,6 +22,15 @@ main.o: src/main.c include/grille.h
 
 
 
+
+#============================================
+SDL: SDL_affichage.o grille.o
+	gcc -o bin/SDL_app compile/SDL_affichage.o compile/grille.o -lSDL -Wall
+
+SDL_affichage.o: src/SDL_affichage.c
+	gcc -o compile/SDL_affichage.o -c src/SDL_affichage.c -I include/
+
+
 clean_objet:
 	rm -rf compile/*
 clean_bin:
