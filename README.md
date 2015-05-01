@@ -1,3 +1,3 @@
 # TechDev_projet
 
-Projet réalisé par Alexandre COMBEAU et Alain KABBOUH
+Projet réalisé par Alexandre COMBEAU (Diggersheep) et Alain KABBOUH (Algateras)
