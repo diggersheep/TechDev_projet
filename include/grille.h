@@ -7,6 +7,8 @@
 #ifndef __GRILLE_H_
 #define __GRILLE_H_
 
+#define MAX_LINE 256
+
 /**Structure de la grille*/
 typedef struct
 {
@@ -15,11 +17,11 @@ typedef struct
 	int** grid;
 }Grille;
 
-typedef struct
+typedef struct StrMapRessources
 {
 	unsigned int taille;
 	char*        data[100];
-} *map_ressourses;
+}* map_ressourses;
 
 typedef Grille* grille;
 typedef char* string;
@@ -37,5 +39,7 @@ void save_grille (grille g);
 void set_grille (grille g, int n, int m, int valeur);
 /**Renvoie le nombre de cases non vide*/
 int info_grille (grille grid);
+/***/
+map_ressourses map_loader(char* path);
 
 #endif

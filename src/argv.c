@@ -5,10 +5,9 @@
 * @date 13-04-2015
 */
 #include <stdio.h>
-#include <stdlib.h>
 
 //test le nombre d'arguments
-int check_agrv (int argc, char* argv[])
+int check_agrv (int argc)
 {
 	if (argc == 1)
 	{

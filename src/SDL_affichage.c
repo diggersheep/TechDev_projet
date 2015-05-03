@@ -11,6 +11,7 @@
 #include <string.h>
 
 #include "grille.h"
+#include "SDL_affichage.h"
 
 #define MAX_SPRITE 2000
 
@@ -27,7 +28,7 @@ unsigned int sceen_case_size = 32;        //taille d'une case en pixel
 
 ObjScreen screen_image[MAX_SPRITE];       //banque d'image #hold-up X)
 unsigned int screen_image_taille = 0;     //taille de la banque d'image
-unsigned short chargemement_pourcent = 0; //indicateur barre de chargement
+unsigned short chargement_pourcent = 0; //indicateur barre de chargement
 //=========================================
 
 void initSDL (int l, int h)
@@ -47,11 +48,11 @@ void initSDL (int l, int h)
 
 void attendre_touche (void)
 {
-	SDL_Event event;
+	SDL_Event e;
 
 	do
-		SDL_WaitEvent(&event);
-	while (event.type != SDL_QUIT && event.type != SDL_KEYDOWN);
+		SDL_WaitEvent(&e);
+	while (e.type != SDL_QUIT && e.type != SDL_KEYDOWN);
 }
 
 void afficher_case (SDL_Surface* img)
@@ -86,7 +87,7 @@ void setImage (int id, char* path)
 }
 
 
-void chargemement (int current, int max)
+void chargement (int current, int max)
 {
 	SDL_Rect pos_charg;
 	SDL_Surface* rect1 = NULL;
@@ -111,7 +112,7 @@ void chargemement (int current, int max)
 	SDL_FillRect(rect2, NULL, SDL_MapRGB(rect2->format, 17, 75, 66));
 	SDL_BlitSurface(rect2, NULL, screen, &pos_charg); 
 
-	chargemement_pourcent = current*100 / max;
+	chargement_pourcent = current*100 / max;
 
 	pos_charg.x = 0;
 	pos_charg.y = 0;
@@ -120,7 +121,7 @@ void chargemement (int current, int max)
 	pos_charg.x = (screen_size_l / 2) - 100;
 	pos_charg.y = (screen_size_h / 2) - (50 / 2);
 
-	barre = SDL_CreateRGBSurface(SDL_HWSURFACE, 2*chargemement_pourcent, 50, 32, 0, 0, 0, 0);
+	barre = SDL_CreateRGBSurface(SDL_HWSURFACE, 2*chargement_pourcent, 50, 32, 0, 0, 0, 0);
 	SDL_SetColorKey(barre, SDL_SRCCOLORKEY, SDL_MapRGB(barre->format,0,0,0));
 	SDL_FillRect(barre, NULL, SDL_MapRGB(barre->format, 76, 166, 142));
 	SDL_BlitSurface(barre, NULL, screen, &pos_charg); 
@@ -142,35 +143,35 @@ void setAllImage (void)
 
 	int max = 607;
 
-	chargemement(0, max);
-	setImage(0, "../ressources/img/bmp/etoile.bmp");
-	chargemement(1, max);
+	chargement(0, max);
+	setImage(0, "../ressources/img/etoile.bmp");
+	chargement(1, max);
 
-	setImage(1, "../ressources/img/bmp/mur.bmp");
-	chargemement(2, max);
+	setImage(1, "../ressources/img/mur.bmp");
+	chargement(2, max);
 
 	for (i = 0 ; i < 100 ; i++)
 	{
-		setImage(200 + i+1, "../ressources/img/bmp/soin.bmp");
-		chargemement(3+i, max);
+		setImage(200 + i+1, "../ressources/img/soin.bmp");
+		chargement(3+i, max);
 	}
 
-	setImage(500,"../ressources/img/bmp/sol.bmp");
-	chargemement(4+i, max);
+	setImage(500,"../ressources/img/sol.bmp");
+	chargement(4+i, max);
 	
-	setImage(501,"../ressources/img/bmp/sol2.bmp");
-	chargemement(5+i, max);
+	setImage(501,"../ressources/img/sol2.bmp");
+	chargement(5+i, max);
 	
-	setImage(502,"../ressources/img/bmp/sol3.bmp");
-	chargemement(6+i, max);
+	setImage(502,"../ressources/img/sol3.bmp");
+	chargement(6+i, max);
 
 	for (j = 0 ; j < 500 ; j++)
 	{
-		setImage(1000+j,"../ressources/img/bmp/obj.bmp");
-		chargemement(7+i+j, max);
+		setImage(1000+j,"../ressources/img/obj.bmp");
+		chargement(7+i+j, max);
 	}
-	setImage(510, "../ressources/img/bmp/black_hole.bmp");
-	chargemement(8+i+j, max);
+	setImage(510, "../ressources/img/black_hole.bmp");
+	chargement(8+i+j, max);
 }
 
 
@@ -232,7 +233,7 @@ void SDL_AfficherGrille(grille g)
 
 }
 
-
+/*
 int main(int argc, char *argv[])
 {
 	unsigned int i;
@@ -270,9 +271,4 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
-
-/*
-
-
-
 */

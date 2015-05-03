@@ -6,10 +6,10 @@
 */
 #ifndef __PERSONNAGE_H_
 #define __PERSONNAGE_H_
-
+/*
 #define OBJ_MAX 10
 #define VARCHAR 256	
-
+*/
 //structure d'une position
 typedef struct
 {
@@ -17,17 +17,7 @@ typedef struct
 	int y;
 } Pos;
 
-
-//structure d'un objet
-typedef struct
-{
-	char nom[VARCHAR];
-	int  id;
-	int  pv;
-	int  atk;
-	int  def;
-} Objet;
-
+/*
 //structure d'un personnage
 typedef struct
 {
@@ -40,12 +30,12 @@ typedef struct
 	char nom[VARCHAR];
 	int  orientation;
 
-} Perso;
-
+} Perso;*/
+/*
 Pos get_pos (char *path);
 Pos new_pos (int x, int y);
 Objet new_objet (char nom[], int id, int pv, int atk, int def);
 Perso new_perso (char nom[], Pos pos, int pv, int atk, int def);
-
+*/
 
 #endif

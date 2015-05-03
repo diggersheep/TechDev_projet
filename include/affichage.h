@@ -10,13 +10,13 @@
 #include "personnage.h"
 #include "grille.h"
 
-void  gestion_case   (Grille grid, int i, int j);
-Perso gesion         (Grille grid, int i, int j, Perso perso, Objet obj[], int taille_obj);
+void  gestion_case   (grille grid, int i, int j);
+Perso gesion         (grille grid, int i, int j, Perso perso, Objet obj[], int taille_obj);
 Perso change_objet   (Perso perso, Objet old,Objet new);
-Perso gestion_objet  (Grille grid, int n, int m, Perso perso, Objet obj[], int taille_obj);
-void  obj2void       (Grille grid, int i, int j);
+Perso gestion_objet  (grille grid, int n, int m, Perso perso, Objet obj[], int taille_obj);
+void  obj2void       (grille grid, int i, int j);
 void  stats_perso    (Perso perso);
-Perso afficher_perso (Grille grid, Perso P, Objet obj[], int taille_obj);
-Perso get_dep        (Grille grid, Perso perso, Objet obj[], int taille_obj);
-void  perdu          (Grille grid, Perso perso);
+Perso afficher_perso (grille grid, Perso P, Objet obj[], int taille_obj);
+Perso get_dep        (grille grid, Perso perso, Objet obj[], int taille_obj);
+void  perdu          (grille grid, Perso perso);
 #endif
