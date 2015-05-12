@@ -9,21 +9,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "personnage.h"
 #include "grille.h"
 #include "SDL_affichage.h"
 #include "controle.h"
 #include "objet.h"
+#include "personnage.h"
 
 
-#define OBJ_MAX 10
 #define VARCHAR 256
 
-/** @brief défini une nouvelle positon
-* @param int x et in y
-* @return position
-*/
-Pos new_pos (int x, int y)
+
+/** @brief défini une nouvelle positon*/
+Pos newPos (int x, int y)
 {
 	Pos P;
 	
@@ -32,9 +29,8 @@ Pos new_pos (int x, int y)
 	return P;
 }
 
-
 //Permet de récupérer une paire de coordonnée grace a un fichier *.map
-Pos get_pos (char *path)
+Pos getPos (char *path)
 {
 	FILE*  f;
 	Pos pos;
@@ -73,79 +69,61 @@ Pos get_pos (char *path)
 	}
 }
 
-/*
-//défini un nouveau personnage
-Perso new_perso (char nom[], Pos pos, int pv, int atk, int def)
+perso setPerso (int pv, int atk, int def,short orientation, char* up, char* right, char* down, char* left)
 {
-	int i;
+	perso p = malloc(sizeof(Perso));
 
-	Perso P;
-	Objet obj_null = new_objet(" ", 1001, 0, 0, 0, );
+	if (p == NULL)
+	{
+		printf("ErreurSetPerso : Le personnage n'a pas été alloué (NULL) - (%p)\n", &p);
+		exit(EXIT_FAILURE);
+	}
+	if (orientation < 0 && orientation > 3)
+	{
+		printf("Warning : Orientation invraissemblable (0-4) - orientation:%d\n", orientation);
+		orientation = 0;
+	}
 
-	strcpy(P.nom, nom);
-	P.pos.x = pos.x;
-	P.pos.y = pos.y;
-	P.pv     = pv;
-	P.pv_max = pv;
-	P.atk    = atk;
-	P.def    = def;
-	P.orientation = 0;
+	short i;
+
+	p->pv          = pv;
+	p->pv_max      = pv;
+	p->atk         = atk;
+	p->def         = def;
+	p->orientation = orientation;
+
+	Objet obj = rechercheObjet(1000); //Objet par défaut, sans caractéristiques
 
 	for (i = 0 ; i < 5 ; i++)
 	{
-		P.equip[i] = obj_null;
+		p->equip[i] = rechercheObjet(1000);
 	}
 
-	return P;
-}*/
+
+	p->img[0] = SDL_LoadBMP(up);
+	p->img[1] = SDL_LoadBMP(right);
+	p->img[2] = SDL_LoadBMP(down);
+	p->img[3] = SDL_LoadBMP(left);
 
 
-int main(int argc, char *argv[])
+	return p;
+}
+
+void unsetPerso (perso p)
 {
-	SDL_Event screen_event;
-	unsigned int i;
-
-	//init de la position
-	screen_position.x = 0;
-	screen_position.y = 0;
+	SDL_FreeSurface(p->img[0]);
+	SDL_FreeSurface(p->img[1]);
+	SDL_FreeSurface(p->img[2]);
+	SDL_FreeSurface(p->img[3]);
 	
-	//init grille
-	grille g = NULL;
-	g = mopen(argv[1]); 
+	free(p);
+}
 
-	//inialisation du contexte de la fenetre SDL
-	initSDL(g->n * sceen_case_size, g->m * sceen_case_size);
-
-	//inialisation des images avec barre de chargement, de meme pour les images d'objet
-	setAllImage();
-	setAllObjet();
-
-	//indicateur de taille de la banque
-	//printf("... screen_image_taille:%d\n", screen_image_taille);
-	
-	
-	attendre_touche(); //Pause
-	
-	//Affichage de la grille ...
-	SDL_AfficherGrille(g);
-	SDL_Flip(screen); // <=> refresh();
-	
-	//Pause
-	//attendre_touche();
-
-	int code;
-	do
+void setPersoPos (perso p, Pos coord)
+{
+	if (p == NULL)
 	{
-		code = pause_touche();
-		printf("... ... code:%d\n", code);
-
+		printf("ErreurSetPersoPos : Le personnage n'existe pas (NULL) - (%p)\n", &p);
 	}
-	while (code == -9999);
-
-	//Désallocation mémoire !! Très important
-	unsetImage();
-	unsetObjet();
-	destruction_grille(g);
-
-	return 0;
+	p->pos = coord;
 }

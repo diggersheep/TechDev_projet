@@ -7,23 +7,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ncurses.h>
 
-#include "grille.h"
 #include "personnage.h"
-#include "affichage.h"
+#include "grille.h"
+#include "controle.h"
+#include "objet.h"
+#include "SDL_affichage.h"
+#include "gestion.h"
+#include "deplacement.h"
 
-int main (int argc, char *argv[])
+
+
+int main(int argc, char *argv[])
 {
 	grille g = NULL;
-	
+	perso p = NULL;
 
-	check_agrv(argc);
-	
-	g = mopen(argv[1]);
-
-
-	destruction_grille(g);
-
+	jeu(p, g, argv[1]);
 	return 0;
 }

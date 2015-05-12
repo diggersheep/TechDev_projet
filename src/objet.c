@@ -10,16 +10,11 @@
 #include <string.h>
 #include <SDL/SDL.h>
 
-#include "personnage.h"
-#include "grille.h"
-#include "SDL_affichage.h"
-#include "controle.h"
 #include "objet.h"
+#include "SDL_affichage.h"
 
 #define VARCHAR 256
-#define OBJ_MAX 1000
 
-Objet object_array[OBJ_MAX];
 unsigned int object_array_length = 0;
 
 void setObjet(char nom[], char* path, int id, int pv, int atk, int def)
@@ -39,49 +34,57 @@ void setObjet(char nom[], char* path, int id, int pv, int atk, int def)
 	object_array[object_array_length].img = SDL_LoadBMP(path);
 
 	object_array_length++;
-
 }
 
 void setAllObjet (void)
 {	
-	int max = 15;
+	int max = 13;
+	int i;
 	chargement(0,max);
-	setObjet(" ", "../ressources/img/obj/1000.bmp", 1000, 0, 0, 0);
+	setObjet(" ", "ressources/img/obj/1000.bmp", 1000, 0, 0, 0);
 	chargement(1,max);
-	setObjet("Sabre grille-pain", "../ressources/img/obj/1001.bmp",1001, 0, 5, 0);
+	setObjet("Sabre grille-pain", "ressources/img/obj/1001.bmp",1001, 0, 5, 0);
 	chargement(2,max);
-	setObjet("Epee rien pour attendre", "../ressources/img/obj/1002.bmp",1001, 0, 10, 2);
+	setObjet("Epee rien pour attendre", "ressources/img/obj/1002.bmp",1001, 0, 10, 2);
 	chargement(3,max);
 
-	setObjet("Glaive de l'alligator", "../ressources/img/obj/1100.bmp",1100, 0, 5, 2);
+	setObjet("Glaive de l'alligator", "ressources/img/obj/1100.bmp",1100, 0, 5, 2);
 	chargement(4,max);
-	setObjet("Dague du voleur volant", "../ressources/img/obj/1101.bmp",1101, 5, 8, 2);
+	setObjet("Dague du voleur volant", "ressources/img/obj/1101.bmp",1101, 5, 8, 2);
 	chargement(5,max);
 
-	setObjet("Casque Astronomique", "../ressources/img/obj/1200.bmp",1200, 5, 0, 0);
+	setObjet("Casque Astronomique", "ressources/img/obj/1200.bmp",1200, 5, 0, 0);
 	chargement(6,max);
-	setObjet("Casque invisible", "../ressources/img/obj/1201.bmp",1221, 10, 0, 2);
+	setObjet("Casque invisible", "ressources/img/obj/1201.bmp",1201, 10, 0, 2);
 	chargement(7,max);
-	setObjet("Couvre-moche", "../ressources/img/obj/1202.bmp",1202, 30, 0, 5);
+	setObjet("Couvre-moche", "ressources/img/obj/1202.bmp",1202, 30, 0, 5);
 	chargement(8,max);
 	
-	setObjet("Cotetlette de maille", "../ressources/img/obj/1300.bmp",1300, 0, 0, 5);
+	setObjet("Cotetlette de maille", "ressources/img/obj/1300.bmp",1300, 0, 0, 5);
 	chargement(9,max);
-	setObjet("Cape de l'apprenti jet d'ail", "../ressources/img/obj/1301.bmp",1301, 2, 0, 10);
+	setObjet("Cape de l'apprenti jet d'ail", "ressources/img/obj/1301.bmp",1301, 2, 0, 10);
 	chargement(10,max);
-	setObjet("bretelles du guerrier fringant", "../ressources/img/obj/1302.bmp",1302, 0, 4, 20);
+	setObjet("bretelles du guerrier fringant", "ressources/img/obj/1302.bmp",1302, 0, 4, 20);
 	chargement(11,max);
 
-	setObjet("Bouclier humain", "../ressources/img/obj/1400.bmp",1400, 0, 0, 10);
+	setObjet("Bouclier humain", "ressources/img/obj/1400.bmp",1400, 0, 0, 10);
 	chargement(12,max);
-	setObjet("Wookie Luck", "../ressources/img/obj/1401.bmp",1401, 0, 5, 20);
+	setObjet("Wookie Luck", "ressources/img/obj/1401.bmp",1401, 1, 5, 15);
 	chargement(13,max);
 	
-	setObjet("Boot en train", "../ressources/img/obj/1500.bmp",1500, 5, 2, 2);
-	chargement(14,max);
-	setObjet("AllStar Convers galactic", "../ressources/img/obj/1501.bmp",1501, 10, 4, 4);
-	chargement(15,max);
 
+
+	setObjet(" ", "ressources/img/obj/1000.bmp", 1000, 0, 0, 0);
+	setObjet(" ", "ressources/img/obj/1000.bmp", 1000, 0, 0, 0);
+
+	for (i = 0 ; i < max ; i++)
+	{
+		if (object_array[i].img == NULL)
+		{
+			printf("ErreurSetAllObjet: Image null (n. %d)\n", i+1);
+			exit(EXIT_FAILURE);
+		}
+	}
 }
 
 void unsetObjet (void)
@@ -91,4 +94,30 @@ void unsetObjet (void)
 		object_array_length--;
 		SDL_FreeSurface(object_array[object_array_length].img);
 	}
+}
+
+Objet rechercheObjet (int id)
+{
+	if (id < 1000 && id > 1999)
+	{
+		printf("Erreurrechercehobjet: L'id n'est pas un objet - id:%d\n", id);
+		exit(EXIT_FAILURE);
+	}
+	int i;
+	for (i = 0 ; i < object_array_length ; i++)
+	{
+		if (object_array[i].id == id)
+		{
+			printf("> %d\n", object_array[i].id);
+			return object_array[i];
+		}
+	}
+
+	printf("ErreurRechercehObjet: l'objet pas dans  - id:%d\n", id);
+	exit(EXIT_FAILURE);
+}
+
+int statsObjet(Objet obj)
+{
+	return (obj.pv + obj.atk + obj.def);
 }

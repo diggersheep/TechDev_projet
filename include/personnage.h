@@ -6,36 +6,48 @@
 */
 #ifndef __PERSONNAGE_H_
 #define __PERSONNAGE_H_
-/*
-#define OBJ_MAX 10
+
+
+#include <SDL/SDL.h>
+
+
+#include "objet.h"
+
 #define VARCHAR 256	
-*/
-//structure d'une position
+
+/**structure d'une position*/
 typedef struct
 {
 	int x;
 	int y;
 } Pos;
 
-/*
-//structure d'un personnage
+
+/**structure d'un personnage*/
 typedef struct
 {
+	char* nom;
 	Pos   pos;
 	int   pv;
 	int   pv_max;
 	int   atk;
 	int   def;
-	Objet equip[5];
-	char nom[VARCHAR];
 	int  orientation;
+	Objet equip[5];
+	SDL_Surface* img[4];
 
-} Perso;*/
-/*
-Pos get_pos (char *path);
-Pos new_pos (int x, int y);
-Objet new_objet (char nom[], int id, int pv, int atk, int def);
-Perso new_perso (char nom[], Pos pos, int pv, int atk, int def);
-*/
+} Perso;
+typedef Perso* perso;
+
+
+/**Lis la position d'un personnage par rapport a un fichier*/
+Pos getPos (char *path);
+/**Défini une nouvelle position*/
+Pos newPos (int x, int y);
+/**Créé un nouveau personnage*/
+perso setPerso (int pv, int atk, int def, short orientation, char* up, char* rigth, char* down, char* left);
+/**Désalloue un personnage*/
+void setPersoPos (perso p, Pos coord);
+
 
 #endif

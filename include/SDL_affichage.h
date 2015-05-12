@@ -15,6 +15,7 @@
 
 #include "grille.h"
 #include "SDL_affichage.h"
+#include "personnage.h"
 
 #define MAX_SPRITE 2000
 
@@ -31,6 +32,12 @@ typedef struct StrObjScreen
 //=========================================
 #define MAX_SPRITE 2000
 SDL_Surface* screen;               //context de la fenetre
+SDL_Surface* fond_stats;
+SDL_Surface* ATKOBJ;
+SDL_Surface* DEFOBJ;
+SDL_Surface* background_chargement;
+SDL_Surface* background_pause;
+SDL_Surface* pause_img;
 SDL_Rect screen_position;                 //position dans la fenetre
 
 unsigned int screen_size_l;               //taille de la fenetre
@@ -59,4 +66,14 @@ void setAllImage (void);
 void unsetImage (void);
 /**Affiche une grille avec SDL*/
 void SDL_AfficherGrille(grille g);
+/**Affiche un personnage (joueur ou monstre)*/
+void afficherPerso (perso p);
+
+//=================================
+//    Interface de stats
+//=================================
+/**Affichage de la barre de vie du joueur*/
+void BarreDeVie (perso p);
+/**Affichage du fond sur lequel les stats vont s'afficher*/
+void FondStatsPerso (void);
 #endif

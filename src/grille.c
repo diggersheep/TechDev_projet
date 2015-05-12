@@ -260,50 +260,11 @@ int info_grille (grille grid)
 	return count;
 }
 
-//======================================
-//    NE FONCTIONNE PAS BIEN ....
-//======================================
-//======================================
-map_ressourses map_loader(char* path)
+void echangeGrille (grille g, int n, int m, int id)
 {
-	map_ressourses maps = malloc(sizeof(struct StrMapRessources));
-
-	FILE* f;
-	char line[MAX_LINE];
-	unsigned int i;
-	unsigned int j;
-
-	f = fopen(path, "r");
-	maps->taille = 0;
-	
-
-	i = 0;
-	if (f != NULL)
+	if (g == NULL)
 	{
-		while (!feof(f))
-		{
-			fgets(line,MAX_LINE,f);
-			maps->data[i] = line;
-			maps->taille++;
-			i++;
-		}
-	}	
-	else
-	{
-		printf("ErreurMap_loader : Le fichier n'a pas pu etre charge - %s\n", path);
-		exit(EXIT_FAILURE);
+		printf("ErreurEchangeGrille : La grille n'exite pas (NULL) - (%p)\n", &g);
 	}
-
-	printf("... ... taille:%d\n", maps->taille);
-
-	fclose(f);
-	return maps;
-}
-
-void mfree(map_ressourses m)
-{
-	if(m == NULL)
-		return;
-	else
-		free(m);
+	g->grid[n][m] = id;
 }

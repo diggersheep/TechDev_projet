@@ -17,12 +17,6 @@ typedef struct
 	int** grid;
 }Grille;
 
-typedef struct StrMapRessources
-{
-	unsigned int taille;
-	char*        data[100];
-}* map_ressourses;
-
 typedef Grille* grille;
 typedef char* string;
 
@@ -39,7 +33,7 @@ void save_grille (grille g);
 void set_grille (grille g, int n, int m, int valeur);
 /**Renvoie le nombre de cases non vide*/
 int info_grille (grille grid);
-/***/
-map_ressourses map_loader(char* path);
+/**Change la valeur d'un entier dans la grille*/
+void echangeGrille (grille g, int n, int m, int id);
 
 #endif
