@@ -1,7 +1,7 @@
 /**
 * @file main.c
 * @brief main
-* @author Alexandre COMBEAU
+* @author Alexandre COMBEAU, Alain KABBOUH
 * @date 13-04-2015
 */
 #include <stdio.h>

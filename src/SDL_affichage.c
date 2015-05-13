@@ -1,7 +1,7 @@
 /**
 * @file SDL_affichage.c
 * @brief affichage avec SDL
-* @author Alexandre COMBEAU
+* @author Alexandre COMBEAU, Alain KABBOUH
 * @date 01-05-2015
 */
 
@@ -303,6 +303,9 @@ void BarreDeVie (perso p)
 	SDL_Surface* barre = NULL;
 	float pv = p->pv / (float)p->pv_max;
 	int barre_vie = pv * 312;
+
+	if (barre_vie < 0)
+		barre_vie = 0;
 
 	pos_vie.x = 2;
 	pos_vie.y = screen_size_h - sceen_case_size*5 + 16;

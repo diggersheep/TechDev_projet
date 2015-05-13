@@ -1,7 +1,7 @@
 /**
 * @file SDL_affichage.h
 * @brief proto affichage avec SDL
-* @author Alexandre COMBEAU
+* @author Alexandre COMBEAU, Alain KABBOUH
 * @date 01-05-2015
 */
 #ifndef __SDL_AFFICHAGE_H_

@@ -1,7 +1,7 @@
 /**
 * @file monstre.h
 * @brief Monstre
-* @author Alexandre COMBEAU
+* @author Alexandre COMBEAU, Alain KABBOUH
 * @date 04-05-2015
 */
 

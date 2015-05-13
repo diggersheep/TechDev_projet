@@ -22,7 +22,7 @@
 typedef int bool;
 
 //TEMPORAIRE
-void gameover (perso p);
+void gameover (perso p, grille g);
 
 /**Echange deux objets si possible*/
 void echangeObjet (Objet obj, int i, perso p);
@@ -45,7 +45,7 @@ void gestionSoin (perso p, int id);
 /**Booléen qui check si un personnage est mort ou pas*/
 bool mort (perso p);
 /**Fonction qui définie la fin de la vie d'un personnage en fonction de son type, soit un joueur, soit un monstre*/
-void gestionVie (perso p, int type);
+void gestionVie (perso p, grille g, int type);
 /**Fonction générale qui regroupe toutes les fonctions de gestion en une seule*/
 void gestion (grille g, perso p, int id, int type);
 

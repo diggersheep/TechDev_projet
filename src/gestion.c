@@ -13,12 +13,18 @@
 #include "objet.h"
 #include "personnage.h"
 #include "gestion.h"
+#include "SDL_affichage.h"
 
 
-//TEMPORAIRE
-void gameover (perso p)
+void gameover (perso p, grille g)
 {
-	printf("Vous avez perdu !\n");
+	destruction_grille(g);
+	unsetImage();
+	unsetObjet();
+	unsetPerso(p);
+
+	SDL_Quit();
+	exit(0);
 }
 
 
@@ -222,12 +228,12 @@ bool mort (perso p)
 		return 0;
 }
 
-void gestionVie (perso p, int type)
+void gestionVie (perso p, grille g, int type)
 {
 	if (mort(p) == 1)
 	{
 		if (type == 0) //joueur
-			gameover(p);
+			gameover(p, g);
 		else
 			printf("Un mob est mort\n");
 	}
@@ -242,7 +248,7 @@ void gestion (grille g, perso p, int id, int type)
 	gestionObjet(id, p, g);
 	gestionPiege(p, id);
 	gestionSoin(p, id);
-	gestionVie(p, type);
+	gestionVie(p, g, type);
 }
 
 

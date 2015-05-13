@@ -21,64 +21,6 @@
 
 void jeu (perso p, grille g, char* path)
 {
-	/*
-	int code;
-	g = mopen(path);
-	initSDL(sceen_case_size * g->n, sceen_case_size * g->m);
-
-	setAllImage();
-	setAllObjet();
-
-	p = setPerso(50, 10, 10, 0, "ressources/img/perso/perso_0.bmp", "ressources/img/perso/perso_1.bmp", "ressources/img/perso/perso_2.bmp", "ressources/img/perso/perso_3.bmp");
-	setPersoPos(p, getPos(path));
-
-	screen_position.x = 0;
-	screen_position.y = 0;
-
-	SDL_AfficherGrille(g);
-	afficherPerso(p);
-	afficherStats(p);
-	SDL_Flip(screen);
-
-	code = pause_touche();
-
-	while (code != 0)
-	{
-		printf("====>%d\n", game_state);
-		if (code == -1 && game_state == -1)
-		{
-		//	afficherPause();
-			SDL_Flip(screen);
-		}
-		else if (code == -1 && game_state == 1)
-		{
-			SDL_Flip(screen);
-			SDL_AfficherGrille(g);
-			afficherPerso(p);
-			afficherStats(p);
-			SDL_Flip(screen);
-		}
-		else if (code >= 1 && code <= 4)
-		{
-
-			GetDeplacementPerso(p, 0, g, code - 1);
-			SDL_AfficherGrille(g);
-			afficherPerso(p);
-			gestion (g, p, g->grid[p->pos.y][p->pos.x], 0);
-			afficherStats(p);
-			SDL_Flip(screen);
-		}
-
-		code = pause_touche();
-	}
-
-	destruction_grille(g);
-	unsetImage();
-	unsetObjet();
-	unsetPerso(p);
-
-	SDL_Quit();
-*/
 	g = mopen(path);
 	initSDL(sceen_case_size * g->n, sceen_case_size * g->m);
 
@@ -130,6 +72,8 @@ void jeu (perso p, grille g, char* path)
 		}
 		else if (code == -2)
 		{
+			destruction_grille(g);
+			unsetPerso(p);
 			g = mopen(path);
 			p = setPerso(50, 10, 10, 0, "ressources/img/perso/perso_0.bmp", "ressources/img/perso/perso_1.bmp", "ressources/img/perso/perso_2.bmp", "ressources/img/perso/perso_3.bmp");
 			setPersoPos(p, getPos(path));
