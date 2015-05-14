@@ -1,12 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL/SDL.h>
+#include <math.h>
+#include <time.h>
 
 #include "grille.h"
 #include "personnage.h"
 #include "deplacement.h"
 #include "gestion.h"
 
+/**Génération d'un nombre pseudo-aléatoire (fonction reprise du TP1 de TechDev)*/
+int nb_alea (int min, int max)
+{	
+
+	int random     = fabs(rand());
+	int intervalle = (max-min);
+	int nb         = (random % intervalle) + min; // tire un nombre dans l'intervale
+
+	return nb;
+}
 
 int getDepGrille (perso p, grille g, int direction)
 {
@@ -74,9 +86,9 @@ void GetDeplacementPerso (perso p, int type, grille g, int direction)
 
 	p->orientation = direction;
 
-	printf("... ... %d \n", /*gestionCollision(id),*/ id);
+	//printf("... ... %d \n", /*gestionCollision(id),*/ id);
 
-	if (gestionCollision(id) == 1)
+	if (gestionCollision(id, p, direction, type) == 1)
 		return;
 
 	DeplacementPerso(p, direction);

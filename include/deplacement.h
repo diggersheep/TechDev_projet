@@ -6,7 +6,6 @@
 #include <SDL/SDL.h>
 
 #include "grille.h"
-#include "gestion.h"
 #include "personnage.h"
 
 /**Fonction qui renvoie l'id de la case ou le personnage est sensé se déplacer*/

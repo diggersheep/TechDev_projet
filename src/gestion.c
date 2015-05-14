@@ -14,6 +14,8 @@
 #include "personnage.h"
 #include "gestion.h"
 #include "SDL_affichage.h"
+#include "monstre.h"
+#include "deplacement.h"
 
 
 void gameover (perso p, grille g)
@@ -22,6 +24,7 @@ void gameover (perso p, grille g)
 	unsetImage();
 	unsetObjet();
 	unsetPerso(p);
+	unsetAllMob();
 
 	SDL_Quit();
 	exit(0);
@@ -62,7 +65,6 @@ void echangeObjet (Objet obj, int i, perso p)
 }
 void checkObjet(int id, int i, perso p)
 {
-	printf("CHECK\n");
 	if (p == NULL)
 	{
 		printf("ErreurCheckObjet: Le pointeur de personnage n'est pas alloué (NULL) - (%p)\n", &p);
@@ -70,11 +72,11 @@ void checkObjet(int id, int i, perso p)
 	}
 	Objet obj = rechercheObjet(id);
 
-	printf("check\n");
+	//printf("check\n");
 
 	if( statsObjet(obj) > statsObjet(p->equip[i]))
 	{
-		printf("OK\n");
+		//printf("OK\n");
 		
 		p->pv += obj.pv - p->equip[i].pv;
 		p->pv_max += obj.pv - p->equip[i].pv;
@@ -89,11 +91,11 @@ void gestionObjet(int id, perso p, grille g)
 {
 
 	int divise = id - 1000 ;
-	printf("%d\n", divise);
+	//printf("%d\n", divise);
 	
 	if (divise >= 0 & divise <= 999)
 	{
-		printf("oh ! un onjet (%d)\n", id);
+	//	printf("oh ! un onjet (%d)\n", id);
 	//	echangeGrille (g, p->pos.x, p->pos.y, 502);
 
 
@@ -120,15 +122,17 @@ void gestionObjet(int id, perso p, grille g)
 
 int degat (int atk, int def)
 {
-	int subit = atk - (def / 5);
+	//int subit = atk - (def / 5);
+	int subit = atk - (def * 20) / 100;
 	if (subit < 0)
 		return 0;
 	else
 		return -1 * subit; //pour que ce soit negatif
 }
+
 int soin (int heal, int def)
 {
-	return heal + (heal * def) / 100;
+	return heal + (def * 20) / 100;
 }
 
 void changePV (perso p, int x)
@@ -148,6 +152,9 @@ void changePV (perso p, int x)
 
 void gestionDegatperso (perso A, perso B, grille g)
 {
+	int fight  = 0;
+	int subit = 0;
+
 	if (A == NULL)
 	{
 		printf("ErreurChangePV : Le personnage n'existe pas (NULL) - (%p)\n", &A);
@@ -159,25 +166,49 @@ void gestionDegatperso (perso A, perso B, grille g)
 		exit(EXIT_FAILURE);
 	}
 
-	Pos nextCoord = getNextCoord(A, g);
+	if (A->pos.x+1 == B->pos.x && A->pos.y+0 == B->pos.y)
+		fight = 1;
+	if (A->pos.x-1 == B->pos.x && A->pos.y+0 == B->pos.y)
+		fight = 1;
+	if (A->pos.x+0 == B->pos.x && A->pos.y+1 == B->pos.y)
+		fight = 1;
+	if (A->pos.x+0 == B->pos.x && A->pos.y-1 == B->pos.y)
+		fight = 1;
 
-	if (nextCoord.x == B->pos.x && nextCoord.y == B->pos.y)
-	{
-		changePV(A, degat(A->atk, B->def));
-	}
+	if ( fight == 1 )
+		subit = degat(A->atk, B->def);
+
+	changePV(B, subit);
 }
 
 //============================================
 //           Collision
 //============================================
-int gestionCollision (int id)
+int gestionCollision (int id, perso p, int direction, int type)
 {
+	unsigned int i;
+
 	if (id > 0 && id < 100) //cases de mur
 		return 1;
-	else if (id > 1999 && id > 3000) //case avec un monstre
-		return 1;
-	else
-		return 0;
+	//array_mob_screen
+
+	if (type == 0)
+	{
+		DeplacementPerso(p, direction);
+		for ( i = 0 ; i < array_mob_screen_length ; ++i )
+			if (p->pos.x == array_mob_screen[i].m->pos.x && p->pos.y == array_mob_screen[i].m->pos.y)
+			{
+				printf("... A>%d:%d M>%d:%d\n", p->pos.x, p->pos.y, array_mob_screen[i].m->pos.x, array_mob_screen[i].m->pos.y);
+				DeplacementPerso(p, (direction+2)%4 );
+				p->orientation = direction;
+				return 1;
+			}
+
+		DeplacementPerso(p, (direction+2)%4 );
+		p->orientation = direction;
+	}
+
+	return 0;
 }
 
 //============================================
@@ -228,14 +259,14 @@ bool mort (perso p)
 		return 0;
 }
 
-void gestionVie (perso p, grille g, int type)
+void gestionVie (perso p, grille g, int type, int i)
 {
 	if (mort(p) == 1)
 	{
 		if (type == 0) //joueur
 			gameover(p, g);
 		else
-			printf("Un mob est mort\n");
+			killBob(p, i);
 	}
 }
 
@@ -243,12 +274,28 @@ void gestionVie (perso p, grille g, int type)
 //           GESTION
 //============================================
 
-void gestion (grille g, perso p, int id, int type)
+void gestion (grille g, perso p, int id, int type, int i)
 {
-	gestionObjet(id, p, g);
+	unsigned int j;
+
 	gestionPiege(p, id);
-	gestionSoin(p, id);
-	gestionVie(p, g, type);
+
+	if (type == 0) // on ne va pas laisser les mobs se régénérés ni prendre des objets
+	{
+		gestionObjet(id, p, g);
+		gestionSoin(p, id);
+	}
+	
+	for ( j = 0 ; j < array_mob_screen_length ; j++ )
+	{
+		gestionDegatperso(array_mob_screen[j].m, p, g);
+	}
+	for ( j = 0 ; j < array_mob_screen_length ; j++ )
+	{
+		gestionDegatperso(p, array_mob_screen[j].m, g);
+	}
+
+	gestionVie(p, g, type, j);
 }
 
 

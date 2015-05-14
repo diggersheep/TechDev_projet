@@ -19,7 +19,7 @@ int pause_touche ()
 {
 	int code = -9999;
 	SDL_WaitEvent(&screen_event);
-	switch (screen_event.type) // test le tupe d'event
+	switch (screen_event.type) // test le type d'event
 	{
 		case SDL_QUIT:
         	code = -900000;

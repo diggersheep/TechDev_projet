@@ -108,7 +108,7 @@ Objet rechercheObjet (int id)
 	{
 		if (object_array[i].id == id)
 		{
-			printf("> %d\n", object_array[i].id);
+	//		printf("> %d\n", object_array[i].id);
 			return object_array[i];
 		}
 	}

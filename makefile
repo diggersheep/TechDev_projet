@@ -2,14 +2,14 @@
 #         VARIABLE
 #============================================
 
-libs=-lSDL
+libs=-lSDL -lm
 warning=-Wall
 opti=-O2
 out=bin/SDL_app
 map=ressources/001.map
 INCLUDE=-I include
 
-DEP=SDL_affichage.o grille.o controle.o deplacement.o main.o personnage.o gestion.o objet.o jeu.o monstre.o
+DEP=SDL_affichage.o grille.o controle.o deplacement.o main.o personnage.o gestion.o objet.o jeu.o monstre.o 
 OBJETS=compile/SDL_affichage.o compile/grille.o compile/controle.o compile/deplacement.o compile/main.o compile/personnage.o compile/gestion.o compile/objet.o compile/jeu.o compile/monstre.o
 
 #============================================
@@ -35,7 +35,7 @@ argv.o: src/argv.c
 gestion.o: src/gestion.c include/grille.h include/objet.h include/personnage.h include/gestion.h include/SDL_affichage.h
 	gcc -o compile/gestion.o -c src/gestion.c $(INCLUDE)
 
-objet.o: src/objet.c include/SDL_affichage.h include/objet.h
+objet.o: src/objet.c include/SDL_affichage.h include/objet.h include/grille.h include/objet.h
 	gcc -o compile/objet.o -c src/objet.c $(INCLUDE)
 
 deplacement.o: src/deplacement.c include/deplacement.h include/personnage.h include/gestion.h include/grille.h
@@ -52,6 +52,9 @@ SDL_affichage.o: src/SDL_affichage.c include/SDL_affichage.h include/grille.h in
 
 controle.o: src/controle.c include/controle.h include/grille.h
 	gcc -o compile/controle.o -c src/controle.c $(INCLUDE)
+
+audio.o: src/audio.c include/SDL_affichage.h include/audio.h
+	gcc -o compile/audio.o -c src/audio.c $(INCLUDE)
 
 main.o: src/main.c include/personnage.h include/grille.h include/controle.h include/objet.h include/SDL_affichage.h include/gestion.h include/deplacement.h
 	gcc -o compile/main.o -c src/main.c $(INCLUDE) -lncurses

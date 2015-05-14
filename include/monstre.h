@@ -12,7 +12,36 @@
 #include "objet.h"
 #include "personnage.h"
 
+#define MAX_MOB 1000
+#define MAX_MOB_SCREEN 100
 /**Type monstre*/
-typedef perso mob; //comme un monstre est un personnage, nous faisons u
+typedef perso mob;
+typedef struct
+{
+	mob m;
+	int id;
+	unsigned short move;//0->static, 1->rand, 2->agro
+}Mob_elem;
+
+Mob_elem array_mob[MAX_MOB];
+int      array_mob_length;
+
+Mob_elem array_mob_screen[MAX_MOB_SCREEN];
+int      array_mob_screen_length;
+
+/***/
+Mob_elem setMob (int pv, int atk, int def, short orientation, char* up, char* rigth, char* down, char* left, int id, unsigned short move);
+/**Alloue tous les mobs possibles d'avoir dans le jeu*/
+void setAllMob (void);
+/**Désalloue un monstre (même fonction que pour un personnage)*/
+void unsetMob (mob m);
+/**Désalloue tout les mobs chargés (sauf ceux a l'écran, mais normalement, il n'y en a plus)*/
+void unsetAllMob (void);
+
+void initMob (grille g, int id_remplacement);
+
+int rechercheMob (int id);
+
+void killBob(mob m, int i);
 
 #endif

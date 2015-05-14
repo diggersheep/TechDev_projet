@@ -21,8 +21,11 @@
 
 typedef int bool;
 
-//TEMPORAIRE
+/**GameOver joueur*/
 void gameover (perso p, grille g);
+
+/**Fonction booléenne qui renvoie 1 s'il y a collision, et 0 sinon*/
+int  gestionCollision (int id, perso p, int direction, int type);
 
 /**Echange deux objets si possible*/
 void echangeObjet (Objet obj, int i, perso p);
@@ -36,8 +39,6 @@ int  degat (int atk, int def);
 int soin (int heal, int def);
 /**Fonction qui change les pv d'un personnage*/
 void changePV (perso p, int x);
-/**Fonction booléenne qui renvoie 1 s'il y a collision, et 0 sinon*/
-int  gestionCollision (int id);
 /**Fonction de gestion des pièges*/
 void gestionPiege (perso p, int id);
 /**Fonction de gestion des soins*/
@@ -45,8 +46,8 @@ void gestionSoin (perso p, int id);
 /**Booléen qui check si un personnage est mort ou pas*/
 bool mort (perso p);
 /**Fonction qui définie la fin de la vie d'un personnage en fonction de son type, soit un joueur, soit un monstre*/
-void gestionVie (perso p, grille g, int type);
+void gestionVie (perso p, grille g, int type, int i);
 /**Fonction générale qui regroupe toutes les fonctions de gestion en une seule*/
-void gestion (grille g, perso p, int id, int type);
+void gestion (grille g, perso p, int id, int type, int i);
 
 #endif

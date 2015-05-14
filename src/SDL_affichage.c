@@ -14,6 +14,7 @@
 #include "SDL_affichage.h"
 #include "objet.h"
 #include "personnage.h"
+#include "monstre.h"
 
 #define MAX_SPRITE 2000
 
@@ -56,7 +57,7 @@ SDL_Surface* rechercheImg (id)
 
 void initSDL (int l, int h)
 {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 	{
 		SDL_Quit();
 		exit(EXIT_FAILURE); //#DESTRUCTION !!!!!!!!!
@@ -289,6 +290,16 @@ void afficherPerso (perso p)
 	screen_position = tmp;
 }
 
+void afficherMob (void)
+{
+	//array_mob_screen_length
+	//array_mob_screen
+	unsigned int i;
+
+	for ( i = 0 ; i < array_mob_screen_length ; i++ )
+		afficherPerso(array_mob_screen[i].m);
+}
+
 void BarreDeVie (perso p)
 {
 	if (p == NULL)
@@ -469,7 +480,7 @@ void afficherObjet(perso p, int emplacement)
 	float atk = p->equip[emplacement].atk / (float)30.0;
 	float def = p->equip[emplacement].def / (float)30.0;
 
-	printf("================> %d:%d:%d\n",  p->equip[emplacement].pv ,  p->equip[emplacement].atk,  p->equip[emplacement].def);
+	//printf("================> %d:%d:%d\n",  p->equip[emplacement].pv ,  p->equip[emplacement].atk,  p->equip[emplacement].def);
 
 	pos_obj.x = 320;
 	pos_obj.y = screen_size_h - sceen_case_size * (5 - emplacement);
