@@ -38,10 +38,13 @@ void unsetMob (mob m);
 /**Désalloue tout les mobs chargés (sauf ceux a l'écran, mais normalement, il n'y en a plus)*/
 void unsetAllMob (void);
 
+/**Mob affichés*/
 void initMob (grille g, int id_remplacement);
 
+/**proxénète pour mob ^^ */
 int rechercheMob (int id);
 
+/**tue un monstre ...  Bob est gentil, mais on le tue quand même :(*/
 void killBob(mob m, int i);
 
 #endif
