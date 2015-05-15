@@ -16,13 +16,16 @@
 grille grid_fog;
 SDL_Surface* noir;
 
+/**creer le brouillard*/
 void initFogGrid (grille g);
-
+/**unset le tout*/
 void FreeFogGrid (void);
 
-
+/**peros visible*/
 void unfogPerso (perso p);
 
+/***/
 void afficherGrilleFog (void);
 
+/**Fonction qui rend visible des parties de la map*/
 void unfogGrid (perso p, grille g, int dist);
