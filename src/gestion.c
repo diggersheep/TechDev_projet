@@ -270,6 +270,36 @@ void gestionVie (perso p, grille g, int type, int i)
 	}
 }
 
+
+
+//============================================
+//           Gagné
+//============================================
+
+void gagne (perso p, grille g)
+{
+	screen_position.x = 0;
+	screen_position.y = 0;
+
+	SDL_Delay(200);
+	
+
+	destruction_grille(g);
+	unsetImage();
+	unsetObjet();
+	unsetPerso(p);
+	unsetAllMob();
+
+	SDL_Quit();
+	exit(0);
+}
+
+void gestionGagne (perso p, grille g, int id)
+{
+	if (id == 777)
+	 gagne(p, g);
+}
+
 //============================================
 //           GESTION
 //============================================
@@ -296,8 +326,10 @@ void gestion (grille g, perso p, int id, int type, int i)
 	}
 
 	gestionVie(p, g, type, j);
-}
 
+	if (type == 0)
+		gestionGagne(p, g, id);
+}
 
 
 

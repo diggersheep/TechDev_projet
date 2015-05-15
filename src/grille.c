@@ -210,57 +210,8 @@ void save_grille (grille g)
 
 }
 
-void set_grille (grille g, int n, int m, int valeur)
-{
-	//===============================================
-	//Tests de sureté pour faire remonter les erreurs
-	if (g == NULL)
-	{
-		printf("ErreurSet_grille: La grille n'est pas allouée (NULL) - (%p)\n", &g);
-		destruction_grille(g);
-		exit(EXIT_FAILURE);
-	}
 
-	if (n > g->n || n <= 0)
-	{
-		printf("Erreurset_grille : La variable de \"n\" n'est pas comprise dans la grille (0-%d)- h:%d (%p)\n",g->n, n, &n);
-		destruction_grille(g);
-		exit(EXIT_FAILURE);
-	}
-
-	if (m > g->m || m <= 0)
-	{
-		printf("Erreurset_grille : La variable de \"m\" n'est pas comprise dans la grille (0-%d)- h:%d (%p)\n",g->m, m, &m);
-		destruction_grille(g);
-		exit(EXIT_FAILURE);
-	}
-	//===============================================
-
-	g->grid[n - 1][m - 1] = valeur;
-
-}
-
-int info_grille (grille grid)
-{	
-	unsigned int i;
-	unsigned int j;
-	unsigned int count = 0;
-
-	for (i = 0 ; i < grid->n ; i++)
-	{
-		for (j = 0 ; j < grid->m ; j++)
-		{
-			if (grid->grid[i][j] != 0)
-			{
-				count++;
-			}
-		}
-	}
-
-	return count;
-}
-
-void echangeGrille (grille g, int n, int m, int id)
+void echange_Grille (grille g, int n, int m, int id)
 {
 	if (g == NULL)
 	{

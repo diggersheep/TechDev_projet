@@ -5,6 +5,9 @@
 * @date 13-05-2015
 */
 
+
+/*SDL et la gestion de l'audio ... trop bas niveau, je n'y comprends rien !*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL/SDL.h>

@@ -13,6 +13,6 @@
 #include "objet.h"
 
 /**Boocle de jeu, a peu près tout ce qu'il y aura dans le main en fait*/
-void jeu (perso p, grille g, char* path);
+void jeu (perso p, grille g, char* path, int fog_activation);
 
 #endif

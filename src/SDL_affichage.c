@@ -249,6 +249,8 @@ void setAllImage (void)
 
 	background_pause = SDL_LoadBMP("ressources/img/background.bmp");
 	chargement(16+i+j+k, max);
+	setImage(777, "ressources/img/win.bmp");
+	chargement(17+i+j+k, max);
 }
 
 

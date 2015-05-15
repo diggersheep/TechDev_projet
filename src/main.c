@@ -29,8 +29,12 @@ int main(int argc, char *argv[])
 	grille g = NULL;
 	perso p = NULL;
 
-	//boucle de jeu
-	jeu(p, g, argv[1]);
+	short choix = menu();
+
+	if (choix == 1)
+		jeu(p, g, argv[1], 0);
+	if (choix == 2)
+		jeu(p, g, argv[1], 1);
 	
 	//fin
 	return 0;

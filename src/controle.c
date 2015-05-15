@@ -10,13 +10,17 @@
 
 #include "controle.h"
 #include "grille.h"
+#include "personnage.h"
+#include "SDL_affichage.h"
 
 int game_state = 1;
 
 SDL_Event screen_event;
+SDL_Rect mouse_pos;
 
-int pause_touche ()
+int pause_touche (perso p, grille g)
 {
+	int n = sceen_case_size;
 	int code = -9999;
 	SDL_WaitEvent(&screen_event);
 	switch (screen_event.type) // test le type d'event
@@ -69,6 +73,32 @@ int pause_touche ()
 					break;
 			}
 			break;
+		
+		case SDL_MOUSEBUTTONUP:
+			if (screen_event.button.button == SDL_BUTTON_LEFT)
+            {
+            	mouse_pos.x = screen_event.button.x;
+            	mouse_pos.y= screen_event.button.y;
+
+            	if ( p->pos.x*n+n <= mouse_pos.x && p->pos.y*n+n >= mouse_pos.y)
+            		if ( p->pos.x*n+n+n >= mouse_pos.x && p->pos.y*n <= mouse_pos.y)
+            			code = 2;
+
+            	if ( p->pos.x*n+n >= mouse_pos.x && p->pos.y*n+n <= mouse_pos.y)
+            		if ( p->pos.x*n <= mouse_pos.x && p->pos.y*n+n+n >= mouse_pos.y)
+            			code = 3;
+
+
+				if ( p->pos.x*n-n <= mouse_pos.x && p->pos.y*n+n >= mouse_pos.y)
+					if ( p->pos.x*n >= mouse_pos.x && p->pos.y*n <= mouse_pos.y)
+						code = 4;
+
+				if ( p->pos.x*n <= mouse_pos.x && p->pos.y*n >= mouse_pos.y)
+					if ( p->pos.x*n+n >= mouse_pos.x && p->pos.y*n-n <= mouse_pos.y)
+						code = 1;
+			}
+			break;
+
 	}
 
 	return code;

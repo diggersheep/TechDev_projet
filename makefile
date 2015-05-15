@@ -2,15 +2,17 @@
 #         VARIABLE
 #============================================
 
-libs=-lSDL -lm
+libs=-lSDL -lm -lncurses
 warning=-Wall
 opti=-O2
 out=bin/SDL_app
-map=ressources/001.map
+map=ressources/001.map 
+#ressources/map1.map
 INCLUDE=-I include
-
-DEP=SDL_affichage.o grille.o controle.o deplacement.o main.o personnage.o gestion.o objet.o jeu.o monstre.o 
-OBJETS=compile/SDL_affichage.o compile/grille.o compile/controle.o compile/deplacement.o compile/main.o compile/personnage.o compile/gestion.o compile/objet.o compile/jeu.o compile/monstre.o
+#main.old.o grille.old.o personnage.old.o affichage.old.o
+DEP= SDL_affichage.o grille.o controle.o deplacement.o main.o personnage.o gestion.o objet.o jeu.o monstre.o menu.o fog.o
+#compile/main.old.o compile/grille.old.o compile/affichage.old.o compile/personnage.old.o 
+OBJETS= compile/SDL_affichage.o compile/grille.o compile/controle.o compile/deplacement.o compile/main.o compile/personnage.o compile/menu.o compile/gestion.o compile/objet.o compile/jeu.o compile/monstre.o compile/fog.o
 
 #============================================
 #       MAIN
@@ -31,6 +33,9 @@ personnage.o: src/personnage.c include/grille.h include/SDL_affichage.h include/
 
 argv.o: src/argv.c
 	gcc -o compile/argv.o -c src/argv.c
+
+menu.o: src/menu.c
+	gcc -o compile/menu.o -c src/menu.c
 
 gestion.o: src/gestion.c include/grille.h include/objet.h include/personnage.h include/gestion.h include/SDL_affichage.h
 	gcc -o compile/gestion.o -c src/gestion.c $(INCLUDE)
@@ -56,8 +61,25 @@ controle.o: src/controle.c include/controle.h include/grille.h
 audio.o: src/audio.c include/SDL_affichage.h include/audio.h
 	gcc -o compile/audio.o -c src/audio.c $(INCLUDE)
 
+fog.o: src/fog.c include/fog.h
+	gcc -o compile/fog.o -c src/fog.c $(INCLUDE)
+
 main.o: src/main.c include/personnage.h include/grille.h include/controle.h include/objet.h include/SDL_affichage.h include/gestion.h include/deplacement.h
 	gcc -o compile/main.o -c src/main.c $(INCLUDE) -lncurses
+
+
+#OLD
+
+main.old.o: src/main.old.c
+	gcc -o compile/main.old.o -c src/main.old.c $(INCLUDE)
+grille.old.o: src/grille.old.c
+	gcc -o compile/grille.old.o -c src/grille.old.c $(INCLUDE)
+personnage.old.o: src/personnage.old.c
+	gcc -o compile/personnage.old.o -c src/personnage.old.c $(INCLUDE)
+affichage.old.o: src/affichage.old.c
+	gcc -o compile/affichage.old.o -c src/affichage.old.c $(INCLUDE)
+
+
 
 #============================================
 #       CLEAN

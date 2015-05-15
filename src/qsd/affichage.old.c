@@ -9,13 +9,12 @@
 #include <string.h>
 #include <ncurses.h>
 
-#include "grille.h"
-#include "personnage.h"
-#include "affichage.h"
+#include "grille.old.h"
+#include "personnage.old.h"
+#include "affichage.old.h"
 
 #define OBJ_MAX 10
 
-/*
 //Affiche les différentes cases non blocantes
 void gestion_case (Grille grid, int i, int j)
 {
@@ -38,7 +37,7 @@ void gestion_case (Grille grid, int i, int j)
 }
 
 //gestion centralisés de toute la grille
-Perso gesion (Grille grid, int i, int j, Perso perso, Objet obj[], int taille_obj)
+Persoold gesion (Grille grid, int i, int j, Persoold perso, Objetold obj[], int taille_obj)
 {
 	
 	if (grid.grid[i][j] / 100 == 1) //case piègées
@@ -62,7 +61,7 @@ Perso gesion (Grille grid, int i, int j, Perso perso, Objet obj[], int taille_ob
 }
 
 //Fonction explicite
-Perso change_objet (Perso perso, Objet old,Objet new)
+Persoold change_objet (Persoold perso, Objetold old,Objetold new)
 {
 	perso.pv += (new.pv - old.pv);
 	perso.pv_max += (new.pv - old.pv);
@@ -73,7 +72,7 @@ Perso change_objet (Perso perso, Objet old,Objet new)
 
 //Fonction qui permet de récuperer les objets et les assiges direcrement dans l'inventaire selon leur carac
 //Bon ... C'est pas super optimal en terme de longueur, mais chaque partie fait la meme chose
-Perso gestion_objet (Grille grid, int n, int m, Perso perso, Objet obj[], int taille_obj)
+Persoold gestion_objet (Grille grid, int n, int m, Persoold perso, Objetold obj[], int taille_obj)
 {
 	int i;
 
@@ -262,7 +261,7 @@ void obj2void (Grille grid, int i, int j)
 }
 
 //Affiche les stats du perso en dessous de la grille
-void stats_perso (Perso perso)
+void stats_perso (Persoold perso)
 {
 	int i;
 	int vie;
@@ -297,7 +296,7 @@ void stats_perso (Perso perso)
 }
 
 //Affiche la grille du personnage et les stats
-Perso afficher_perso (Grille grid, Perso P, Objet obj[], int taille_obj)
+Persoold afficher_perso (Grille grid, Persoold P, Objetold obj[], int taille_obj)
 {
 	clear();
 	int i;
@@ -352,7 +351,7 @@ Perso afficher_perso (Grille grid, Perso P, Objet obj[], int taille_obj)
 
 //fonction centrale du jeu. Elle permet de capturer une touche et de déplacer le personnage
 //Elle utilise "gestion" et "afficher_perso"
-Perso get_dep (Grille grid, Perso perso, Objet obj[], int taille_obj)
+Persoold get_dep (Grille grid, Persoold perso, Objetold obj[], int taille_obj)
 {
 	char touches = getch();
 
@@ -426,7 +425,7 @@ Perso get_dep (Grille grid, Perso perso, Objet obj[], int taille_obj)
 }
 
 //Fonction qui fait perdre
-void perdu (Grille grid, Perso perso)
+void perdu (Grille grid, Persoold perso)
 {
 	clear();
 	printw("Vous avez perdu :(");
@@ -437,5 +436,4 @@ void perdu (Grille grid, Perso perso)
 	destruction_grille(grid);
 	exit(0);
 }
-*/
 
